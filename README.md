@@ -374,6 +374,6 @@ terraform destroy
 
 # 👨‍💻 Author
 
-**Jyotiraj Mahanta**
+**Jyotiraj Aditinandan Mahanta**
 
 DevOps | AWS | Docker | Kubernetes | Terraform | GitLab CI/CD

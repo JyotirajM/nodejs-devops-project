@@ -1,5 +1,4 @@
-node_modules
-# package-lock.json
+# Node.js
 node_modules/
 .env
 npm-debug.log
@@ -13,6 +12,12 @@ override.tf
 override.tf.json
 *_override.tf
 *_override.tf.json
-
-# Ignore tfvars if it contains secrets
 terraform.tfvars
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
