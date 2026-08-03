@@ -3,3 +3,16 @@ node_modules
 node_modules/
 .env
 npm-debug.log
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Ignore tfvars if it contains secrets
+terraform.tfvars

@@ -1,0 +1,11 @@
+replicaCount: 2
+
+image:
+  repository: hitesh008/nodejs-devops-project
+  tag: latest
+  pullPolicy: Always
+
+service:
+  type: LoadBalancer
+  port: 8080
+  targetPort: 8080
