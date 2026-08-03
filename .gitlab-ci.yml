@@ -26,7 +26,7 @@ build_and_push_image:
     DOCKER_HOST: tcp://docker:2375
     DOCKER_TLS_CERTDIR: ""
   script:
-    - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
     - docker build -t $IMAGE_NAME:$CI_COMMIT_SHORT_SHA .
     - docker tag $IMAGE_NAME:$CI_COMMIT_SHORT_SHA $IMAGE_NAME:latest
     - docker push $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
@@ -46,11 +46,12 @@ deploy_to_eks:
     - mv kubectl /usr/local/bin/
 
     # Install Helm
-    - curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+    - curl -fsSL https://get.helm.sh/helm-v3.18.4-linux-amd64.tar.gz -o helm.tar.gz
+    - tar -zxvf helm.tar.gz
+    - mv linux-amd64/helm /usr/local/bin/helm
+    - chmod +x /usr/local/bin/helm
+    - helm version
 
   script:
     - aws eks update-kubeconfig --region $AWS_DEFAULT_REGION --name nodejs-devops
-
-    - helm upgrade --install nodejs-devops ./helm/nodejs-devops \
-        --set image.repository=$IMAGE_NAME \
-        --set image.tag=$CI_COMMIT_SHORT_SHA
+    - helm upgrade --install nodejs-devops ./helm/nodejs-devops --set image.repository=$IMAGE_NAME --set image.tag=$CI_COMMIT_SHORT_SHA
